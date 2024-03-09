@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import RunComparisonButton from './test_buttons/runComparisonButton';
 import SelectFilepathButton from './test_buttons/selectFilepathButton';
+import KinectCanvas from './kinect_recording/KinectCanvas';
 // import icon from '../../assets/icon.svg';
 // import './App.css';
 
@@ -13,19 +14,7 @@ function Hello() {
       <p>This demo shows the color stream in an html canvas element.</p>
       <RunComparisonButton>Test comparison</RunComparisonButton>
       <SelectFilepathButton>Test selecting filepath</SelectFilepathButton>
-      <div>
-        <canvas
-          id="outputCanvas"
-          width="1920"
-          height="1080"
-          className="img-fluid"
-        />
-      </div>
-      <div className="mb-3">
-        <button type="button" id="toggleFeedButton">
-          Stop Video
-        </button>
-      </div>
+      <KinectCanvas />
     </div>
   );
 }
