@@ -1,8 +1,21 @@
+@font-face {
+  font-family: 'Azaret Mono';
+  src: url('./assets/fonts/Azaret_Mono/AzeretMono-VariableFont_wght.ttf');
+}
+
+:root {
+  --primary-text: #875094;
+  --secondary-text: #FFB9F8;
+  --primary-bg: #8BD0CA;
+  --secondary-bg: #214658;
+  --mono-font: "Azaret Mono"
+}
 
 body {
   position: relative;
+  background-color: var(--primary-bg);
   height: 100vh;
-  font-family: sans-serif;
+  font-family: var(--mono-font);
   justify-content: center;
   align-items: center;
   /* background-image:url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='200px' width='1500px'> <text x='20' y='150' fill='gray' font-size='200'>ollie /w kinect</text></svg>"); */
