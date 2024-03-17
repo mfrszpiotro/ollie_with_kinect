@@ -3,18 +3,31 @@ import { Link } from 'react-router-dom';
 export default function Menu() {
   return (
     <div>
+      <Link to="/">
+        <button className="btn-arrow" type="button">
+          &larr;
+        </button>
+      </Link>
       <ul>
         <li>
-          <Link to="/record">record your ollie</Link>
+          <Link to="/test">
+            <button type="button">test</button>
+          </Link>
         </li>
         <li>
-          <Link to="/compare">compare with other</Link>
+          <Link to="/record">
+            <button type="button">record your ollie</button>
+          </Link>
         </li>
         <li>
-          <Link to="/saved">view saved comparisons</Link>
+          <Link to="/compare">
+            <button type="button">compare with other</button>
+          </Link>
         </li>
         <li>
-          <Link to="/">back to start</Link>
+          <Link to="/saved">
+            <button type="button">view saved comparisons</button>
+          </Link>
         </li>
       </ul>
     </div>

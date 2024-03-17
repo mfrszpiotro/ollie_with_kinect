@@ -6,7 +6,11 @@ import KinectCanvas from '../components/kinect_recording/KinectCanvas';
 export default function Test() {
   return (
     <div>
-      <Link to="/">back to start</Link>
+      <Link to="/">
+        <button className="btn-arrow" type="button">
+          &larr;
+        </button>
+      </Link>
       <div className="d-flex align-items-baseline justify-content-between">
         <h1 className="bd-title">Color Stream</h1>
       </div>
