@@ -1,5 +1,5 @@
 import React from 'react';
-import CHANNELS from '../../ipc_channels';
+import CHANNELS from '../../../ipc_channels';
 
 export interface ButtonProps {
   children: React.ReactNode;
