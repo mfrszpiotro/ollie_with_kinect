@@ -7,15 +7,14 @@ export interface ButtonProps {
 }
 
 function SelectFilepathButton({ children, ...props }: ButtonProps) {
-  const [selectFileState, setSelectFileState] = useState(['starting']);
+  const [selectFileState, setSelectFileState] = useState('starting');
   const { dialog_open_file } = CHANNELS;
   const handleOnClick = () => {
     window.electronIpc.once(dialog_open_file, (arg) => {
       if (typeof arg === 'object') {
-        // @ts-ignore
-        setSelectFileState(arg);
+        setSelectFileState(JSON.stringify(arg));
       } else {
-        setSelectFileState(['undefined']);
+        setSelectFileState('undefined');
       }
     });
     window.electronIpc.sendMessage(dialog_open_file);
