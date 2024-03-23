@@ -10,6 +10,8 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
+import fs from 'fs';
+import child_process from 'child_process';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import CHANNELS from '../ipc_channels';
@@ -31,15 +33,26 @@ ipcMain.on(dialog_open_file, async (event) => {
   }
 });
 
-const { ipc_example } = CHANNELS;
-ipcMain.on(ipc_example, async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  dialog.showOpenDialogSync({
-    defaultPath: __dirname,
-    properties: ['openFile'],
-  });
-  event.reply(ipc_example, msgTemplate(`pong + ${__dirname}`));
+const { run_comparison } = CHANNELS;
+ipcMain.on(run_comparison, async (event) => {
+  try {
+    child_process.execFileSync(
+      path.join(
+        'C:/Users/piotrowskmarcel/Desktop/repos/kinect-electron-react-boilerplate/src/process_ollie',
+        'processing_app.exe',
+      ),
+      [
+        'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/ok/jump_20231106120823716.csv',
+        'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/good/jump_20231106121119882.csv',
+      ],
+    );
+    const data = fs.readFileSync(path.join(__dirname, 'comparison.json'));
+    event.reply(run_comparison, JSON.parse(data.toString()));
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      event.reply(run_comparison, [`${error.name}: ${error.message}`]);
+    }
+  }
 });
 
 if (process.env.NODE_ENV === 'production') {

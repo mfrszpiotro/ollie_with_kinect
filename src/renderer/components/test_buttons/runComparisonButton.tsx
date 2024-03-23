@@ -1,6 +1,5 @@
-import child_process from 'child_process';
-import path from 'path';
-import React from 'react';
+import React, { useState } from 'react';
+import CHANNELS from '../../../ipc_channels';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -8,18 +7,18 @@ export interface ButtonProps {
 }
 
 function RunComparisonButton({ children, ...props }: ButtonProps) {
+  const [comparisonJsonContents, setComparisonJsonContents] = useState('empty');
+  const { run_comparison } = CHANNELS;
   const handleOnClick = () => {
     try {
-      child_process.execFileSync(
-        path.join(
-          'C:/Users/piotrowskmarcel/Desktop/repos/kinect-electron-react-boilerplate/src/process_ollie',
-          'processing_app.exe',
-        ),
-        [
-          'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/ok/jump_20231106120823716.csv',
-          'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/good/jump_20231106121119882.csv',
-        ],
-      );
+      window.electronIpc.once(run_comparison, (arg) => {
+        if (typeof arg === 'object') {
+          setComparisonJsonContents(JSON.stringify(arg));
+        } else {
+          setComparisonJsonContents('undefined');
+        }
+      });
+      window.electronIpc.sendMessage(run_comparison);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(`${error.name}: ${error.message}`);
@@ -28,9 +27,12 @@ function RunComparisonButton({ children, ...props }: ButtonProps) {
   };
 
   return (
-    <button type="button" onClick={handleOnClick} {...props}>
-      {children}
-    </button>
+    <>
+      <p>{comparisonJsonContents}</p>
+      <button type="button" onClick={handleOnClick} {...props}>
+        {children}
+      </button>
+    </>
   );
 }
 
