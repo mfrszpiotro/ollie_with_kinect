@@ -1,0 +1,29 @@
+/* .table-tte {
+  background-color: whitesmoke;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.border-gradient {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+}
+.border-gradient-purple {
+  border-image-source: linear-gradient(to left, #EC85DA, #FDB6BF);
+} */
+
+.table-tte {
+  width: 300px;
+  height: 80px;
+  border: double 0.4rem transparent;
+  border-radius: 30px;
+  text-align: center;
+  background-image: linear-gradient(white, white),
+                    linear-gradient(to left, #EC85DA, #FDB6BF);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
