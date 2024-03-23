@@ -50,7 +50,7 @@ ipcMain.on(run_comparison, async (event) => {
     event.reply(run_comparison, JSON.parse(data.toString()));
   } catch (error: unknown) {
     if (error instanceof Error) {
-      event.reply(run_comparison, [`${error.name}: ${error.message}`]);
+      event.reply(run_comparison, { [error.name]: error.message });
     }
   }
 });

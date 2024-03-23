@@ -15,6 +15,11 @@ export default function Menu() {
           </Link>
         </li>
         <li>
+          <Link to="/report">
+            <button type="button">test report</button>
+          </Link>
+        </li>
+        <li>
           <Link to="/record">
             <button type="button">record your ollie</button>
           </Link>
