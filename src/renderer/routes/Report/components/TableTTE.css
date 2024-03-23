@@ -1,24 +1,7 @@
-/* .table-tte {
-  background-color: whitesmoke;
-}
-
-table {
-  table-layout: fixed;
-  width: 100%;
-}
-
-.border-gradient {
-  border: 10px solid;
-  border-image-slice: 1;
-  border-width: 5px;
-}
-.border-gradient-purple {
-  border-image-source: linear-gradient(to left, #EC85DA, #FDB6BF);
-} */
-
 .table-tte {
   width: 300px;
   height: 80px;
+  table-layout: fixed;
   border: double 0.4rem transparent;
   border-radius: 30px;
   text-align: center;
@@ -26,4 +9,22 @@ table {
                     linear-gradient(to left, #EC85DA, #FDB6BF);
   background-origin: border-box;
   background-clip: content-box, border-box;
+}
+
+table td, table th {
+  border: 1px solid gray;
+}
+table tr:first-child th {
+  border-top: 0;
+}
+table tr:last-child td {
+  border-bottom: 0;
+}
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
 }
