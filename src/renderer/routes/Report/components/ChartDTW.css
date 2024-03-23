@@ -1,0 +1,11 @@
+.chart-dtw {
+  height: 200px;
+  table-layout: fixed;
+  border: double 0.4rem transparent;
+  border-radius: 30px;
+  text-align: center;
+  background-image: linear-gradient(whitesmoke, whitesmoke),
+                    linear-gradient(to left, #EC85DA, #FDB6BF);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
