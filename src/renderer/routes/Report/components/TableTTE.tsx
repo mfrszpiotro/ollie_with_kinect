@@ -22,11 +22,11 @@ export default function TableTTE({ comparisonData }: Props) {
       <table className="table-tte">
         <tr>
           <th>commit</th>
-          <th className="solid-black-border-left">reference</th>
+          <th>reference</th>
         </tr>
         <tr>
           <td>{time_diff_commit}</td>
-          <td className="solid-black-border-left">{time_diff_reference}</td>
+          <td>{time_diff_reference}</td>
         </tr>
       </table>
     </>
