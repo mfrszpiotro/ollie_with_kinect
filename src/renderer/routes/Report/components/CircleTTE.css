@@ -1,0 +1,9 @@
+.CircularProgressbar-text {
+  fill: #E079B8 !important;
+  font-size: 2rem !important;
+}
+
+.CircularProgressbar {
+  background: whitesmoke;
+  border-radius: 100px;
+}
