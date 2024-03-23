@@ -18,11 +18,17 @@ let mainWindow: BrowserWindow | null = null;
 
 const { dialog_open_file } = CHANNELS;
 ipcMain.on(dialog_open_file, async (event) => {
-  const filepath = dialog.showOpenDialogSync({
-    defaultPath: __dirname,
-    properties: ['openFile'],
-  });
-  event.reply(dialog_open_file, filepath);
+  try {
+    const filepath = dialog.showOpenDialogSync({
+      defaultPath: __dirname,
+      properties: ['openFile'],
+    });
+    event.reply(dialog_open_file, filepath);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      event.reply(dialog_open_file, [`${error.name}: ${error.message}`]);
+    }
+  }
 });
 
 const { ipc_example } = CHANNELS;

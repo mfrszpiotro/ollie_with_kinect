@@ -165,8 +165,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "ollie_with_kinect",
+    "appId": "org.erb.ollie_with_kinect",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

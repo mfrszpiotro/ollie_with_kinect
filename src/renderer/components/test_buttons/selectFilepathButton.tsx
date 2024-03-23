@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CHANNELS from '../../../ipc_channels';
 
 export interface ButtonProps {
@@ -7,18 +7,27 @@ export interface ButtonProps {
 }
 
 function SelectFilepathButton({ children, ...props }: ButtonProps) {
+  const [selectFileState, setSelectFileState] = useState(['starting']);
   const { dialog_open_file } = CHANNELS;
   const handleOnClick = () => {
     window.electronIpc.once(dialog_open_file, (arg) => {
-      console.log(arg);
+      if (typeof arg === 'object') {
+        // @ts-ignore
+        setSelectFileState(arg);
+      } else {
+        setSelectFileState(['undefined']);
+      }
     });
     window.electronIpc.sendMessage(dialog_open_file);
   };
 
   return (
-    <button type="button" onClick={handleOnClick} {...props}>
-      {children}
-    </button>
+    <>
+      <p>{selectFileState}</p>
+      <button type="button" onClick={handleOnClick} {...props}>
+        {children}
+      </button>
+    </>
   );
 }
 
