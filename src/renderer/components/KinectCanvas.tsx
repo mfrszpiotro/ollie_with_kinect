@@ -3,21 +3,27 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-bitwise */
 /* eslint-disable no-use-before-define */
+// @ts-ignore
+import * as Kinect2 from 'kinect2';
+import { KinectBody } from '../../../kinect_interfaces';
+
 export default function KinectCanvas() {
   const handleOnClick = () => {
-    // eslint-disable-next-line global-require
-    const Kinect2 = require('kinect2');
     const kinect = new Kinect2();
 
-    const $rgbCanvas = document.getElementById('rgbCanvas');
-    const rgbCtx = $rgbCanvas.getContext('2d');
+    const $rgbCanvas = document.getElementById(
+      'rgbCanvas',
+    ) as HTMLCanvasElement;
+    const rgbCtx = $rgbCanvas.getContext('2d') as CanvasRenderingContext2D;
     const rgbImageData = rgbCtx.createImageData(
       $rgbCanvas.width,
       $rgbCanvas.height,
     );
 
-    const $depthCanvas = document.getElementById('depthCanvas');
-    const depthCtx = $depthCanvas.getContext('2d');
+    const $depthCanvas = document.getElementById(
+      'depthCanvas',
+    ) as HTMLCanvasElement;
+    const depthCtx = $depthCanvas.getContext('2d') as CanvasRenderingContext2D;
     const depthImageData = depthCtx.createImageData(
       $depthCanvas.width,
       $depthCanvas.height,
@@ -32,7 +38,9 @@ export default function KinectCanvas() {
       '#ff00ff',
     ];
 
-    const $toggleFeedButton = document.getElementById('toggleFeedButton');
+    const $toggleFeedButton = document.getElementById(
+      'toggleFeedButton',
+    ) as HTMLButtonElement;
 
     let feedOpen = false;
 
@@ -40,9 +48,9 @@ export default function KinectCanvas() {
       startKinect();
     };
 
-    const setFeedOpen = async (value) => {
-      if (value !== feedOpen) {
-        feedOpen = value;
+    const setFeedOpen = async (desiredFeedOpen: boolean) => {
+      if (desiredFeedOpen !== feedOpen) {
+        feedOpen = desiredFeedOpen;
         if (feedOpen) {
           kinect.openMultiSourceReader({
             frameTypes:
@@ -83,7 +91,11 @@ export default function KinectCanvas() {
       }
     };
 
-    const renderColorFrame = (ctx, canvasImageData, newPixelData) => {
+    const renderColorFrame = (
+      ctx: CanvasRenderingContext2D,
+      canvasImageData: ImageData,
+      newPixelData: Uint8ClampedArray,
+    ) => {
       const pixelArray = canvasImageData.data;
       for (let i = 0; i < canvasImageData.data.length; i++) {
         pixelArray[i] = newPixelData[i];
@@ -91,7 +103,11 @@ export default function KinectCanvas() {
       ctx.putImageData(canvasImageData, 0, 0);
     };
 
-    const renderDepthFrame = (ctx, canvasImageData, newPixelData) => {
+    const renderDepthFrame = (
+      ctx: CanvasRenderingContext2D,
+      canvasImageData: ImageData,
+      newPixelData: Uint8ClampedArray,
+    ) => {
       const pixelArray = canvasImageData.data;
       let depthPixelIndex = 0;
       for (let i = 0; i < canvasImageData.data.length; i += 4) {
@@ -104,9 +120,14 @@ export default function KinectCanvas() {
       ctx.putImageData(canvasImageData, 0, 0);
     };
 
-    const renderBodyFrame = (ctx, canvas, bodyFrame, isColor) => {
+    const renderBodyFrame = (
+      ctx: CanvasRenderingContext2D,
+      canvas: HTMLCanvasElement,
+      bodyFrame,
+      isColor: Boolean,
+    ) => {
       let index = 0;
-      bodyFrame.bodies.forEach((body) => {
+      bodyFrame.bodies.forEach((body: KinectBody) => {
         if (body.tracked) {
           for (const jointType in body.joints) {
             const joint = body.joints[jointType];
@@ -173,7 +194,7 @@ export default function KinectCanvas() {
           />
         </div>
       </div>
-      <button type="button" id="toggleFeedButton" disabled="disabled">
+      <button type="button" id="toggleFeedButton" disabled>
         Stop Video
       </button>
     </div>

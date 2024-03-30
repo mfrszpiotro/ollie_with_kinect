@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import RunComparisonButton from '../components/test_buttons/runComparisonButton';
 import SelectFilepathButton from '../components/test_buttons/selectFilepathButton';
-import KinectCanvas from '../components/kinect_recording/KinectCanvas';
+import KinectCanvas from '../components/KinectCanvas';
 
 export default function Test() {
   return (
