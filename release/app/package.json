@@ -13,6 +13,6 @@
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
   "dependencies": {
-    "kinect2": "0.2.6"
+    "kinect2": "0.2.3"
   }
 }
