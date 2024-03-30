@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import comparison from '../../../../comparison.json';
+import comparison from './comparison.json';
 import { TimeTwoEventsComparison } from './data_interfaces';
 import TableTTE from './components/TableTTE';
 import CircleTTE from './components/CircleTTE';
 import ChartDTW from './components/ChartDTW';
 import './Report.css';
+import path from 'path';
 
 export interface GradientProps {
   startColor: string;
