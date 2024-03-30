@@ -5,7 +5,7 @@
 /* eslint-disable no-use-before-define */
 // @ts-ignore
 import * as Kinect2 from 'kinect2';
-import { KinectBody } from '../../../kinect_interfaces';
+import { BodyFrame, Body } from '../../kinect_interfaces';
 
 export default function KinectCanvas() {
   const handleOnClick = () => {
@@ -68,7 +68,7 @@ export default function KinectCanvas() {
 
     const startKinect = () => {
       if (kinect.open()) {
-        kinect.on('multiSourceFrame', (frame) => {
+        kinect.on('multiSourceFrame', (frame: any) => {
           if (frame.color && frame.color.buffer) {
             renderColorFrame(rgbCtx, rgbImageData, frame.color.buffer);
           }
@@ -123,11 +123,11 @@ export default function KinectCanvas() {
     const renderBodyFrame = (
       ctx: CanvasRenderingContext2D,
       canvas: HTMLCanvasElement,
-      bodyFrame,
+      bodyFrame: BodyFrame,
       isColor: Boolean,
     ) => {
       let index = 0;
-      bodyFrame.bodies.forEach((body: KinectBody) => {
+      bodyFrame.bodies.forEach((body: Body) => {
         if (body.tracked) {
           for (const jointType in body.joints) {
             const joint = body.joints[jointType];
