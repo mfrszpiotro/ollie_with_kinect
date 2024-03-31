@@ -69,10 +69,10 @@ export default function KinectCanvas() {
     const startKinect = () => {
       if (kinect.open()) {
         kinect.on('multiSourceFrame', (frame: MultiSourceFrame) => {
-          if (frame.color && frame.color.buffer) {
+          if (frame?.color?.buffer) {
             renderColorFrame(rgbCtx, rgbImageData, frame.color.buffer);
           }
-          if (frame.depth && frame.depth.buffer) {
+          if (frame?.depth?.buffer) {
             renderDepthFrame(depthCtx, depthImageData, frame.depth.buffer);
           }
           if (frame.body) {
@@ -169,29 +169,20 @@ export default function KinectCanvas() {
       <button type="button" onClick={handleOnClick}>
         Run Kinect instance
       </button>
-      <div className="d-flex align-items-baseline justify-content-between">
-        <h1 className="bd-title">Multi Source Stream</h1>
+      <div>
+        <h1>Multi Source Stream</h1>
       </div>
       <p>This demo shows multiple streams.</p>
 
-      <div className="row mb-3">
-        <div className="col-7">
-          <p className="mb-1">Color image:</p>
-          <canvas
-            id="rgbCanvas"
-            width="1920"
-            height="1080"
-            className="img-fluid"
-          />
+      <div>
+        <div>
+          <p>Depth image:</p>
+          <canvas id="depthCanvas" width="512" height="424" />
+          {/* <CanvasRecorder /> */}
         </div>
-        <div className="col-5">
-          <p className="mb-1">Depth image:</p>
-          <canvas
-            id="depthCanvas"
-            width="512"
-            height="424"
-            className="img-fluid"
-          />
+        <div>
+          <p>Color image:</p>
+          <canvas id="rgbCanvas" width="1920" height="1080" />
         </div>
       </div>
       <button type="button" id="toggleFeedButton" disabled>
