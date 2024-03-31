@@ -5,7 +5,7 @@
 /* eslint-disable no-use-before-define */
 // @ts-ignore
 import * as Kinect2 from 'kinect2';
-import { BodyFrame, Body } from '../../kinect_interfaces';
+import { BodyFrame, Body, MultiSourceFrame } from '../../kinect_interfaces';
 
 export default function KinectCanvas() {
   const handleOnClick = () => {
@@ -68,7 +68,7 @@ export default function KinectCanvas() {
 
     const startKinect = () => {
       if (kinect.open()) {
-        kinect.on('multiSourceFrame', (frame: any) => {
+        kinect.on('multiSourceFrame', (frame: MultiSourceFrame) => {
           if (frame.color && frame.color.buffer) {
             renderColorFrame(rgbCtx, rgbImageData, frame.color.buffer);
           }

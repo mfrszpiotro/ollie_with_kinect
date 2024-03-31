@@ -1,3 +1,6 @@
+// ***
+// * Typescript interfaces for kinect2@0.2.3 npm package (https://github.com/wouterverweirder/kinect2)
+// ***
 // number/string types mostly from floats/chars with some exceptions (see: other comments)
 export interface Joint {
   depthX: number;
@@ -7,26 +10,18 @@ export interface Joint {
   cameraX: number;
   cameraY: number;
   cameraZ: number;
-  hasFloorData: boolean; // bool
-  floorDepthX: number;
-  floorDepthY: number;
-  floorColorX: number;
-  floorColorY: number;
-  floorCameraX: number;
-  floorCameraY: number;
-  floorCameraZ: number;
   orientationX: number;
   orientationY: number;
   orientationZ: number;
   orientationW: number;
   jointType: number; // int
-  trackingState: string;
+  trackingState: number; // char
 }
 
 export interface Body {
-  tracked: boolean;
-  hasPixels: boolean;
-  trackingId: number; // UINT64
+  bodyIndex: number;
+  tracked: boolean; // if tracked then the rest of properties below shouldn't be null
+  trackingId: string; // UINT64
   leftHandState: string;
   rightHandState: string;
   joints: Joint[];
@@ -34,14 +29,30 @@ export interface Body {
 
 export interface BodyFrame {
   bodies: Body[];
-  hasFloorClipPlane: boolean;
-  floorClipPlaneX: number;
-  floorClipPlaneY: number;
-  floorClipPlaneZ: number;
-  floorClipPlaneW: number;
-  cameraAngle: number;
-  cosCameraAngle: number;
-  sinCameraAngle: number;
+  floorClipPlane: {
+    w: number;
+    x: number;
+    y: number;
+    z: number;
+  };
 }
 
-// export interface MultiSourceFrame {} todo
+export interface ColorFrame {
+  buffer: Uint8ClampedArray;
+  diagonalFieldOfView: number;
+  verticalFieldOfView: number;
+  horizontalFieldOfView: number;
+}
+
+export interface DepthFrame {
+  buffer: Uint8ClampedArray;
+  diagonalFieldOfView: number;
+  verticalFieldOfView: number;
+  horizontalFieldOfView: number;
+}
+
+export interface MultiSourceFrame {
+  body: BodyFrame;
+  color: ColorFrame;
+  depth: DepthFrame;
+}
