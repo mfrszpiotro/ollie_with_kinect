@@ -17,7 +17,9 @@ export default function Test() {
       <p>This demo shows the color stream in an html canvas element.</p>
       <RunComparisonButton>Test comparison</RunComparisonButton>
       <SelectFilepathButton>Test selecting filepath</SelectFilepathButton>
-      <KinectCanvas />
+      <div>
+        <KinectCanvas />
+      </div>
     </div>
   );
 }
