@@ -11,10 +11,10 @@ export default function Test() {
           &larr;
         </button>
       </Link>
-      <div className="d-flex align-items-baseline justify-content-between">
-        <h1 className="bd-title">Color Stream</h1>
+      <div>
+        <h1>Testing functionalities</h1>
       </div>
-      <p>This demo shows the color stream in an html canvas element.</p>
+      <p>This demo shows main functionalites of the app</p>
       <RunComparisonButton>Test comparison</RunComparisonButton>
       <SelectFilepathButton>Test selecting filepath</SelectFilepathButton>
       <div>

@@ -1,6 +1,6 @@
 // @ts-ignore
 import * as Kinect2 from 'kinect2';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BodyFrame, Body, MultiSourceFrame } from '../../kinect_interfaces';
 
 const DEPTH_IMAGE_WIDTH = 512;
@@ -75,9 +75,44 @@ function renderBodyFrame(
 
 export default function KinectCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const startButtonRef = useRef<HTMLButtonElement>(null);
+  const stopButtonRef = useRef<HTMLButtonElement>(null);
+  const [isRecording, setIsRecording] = useState(false);
+
   useEffect(() => {
     const kinect = new Kinect2();
     const context = canvasRef.current?.getContext('2d');
+    const streamCanvas = canvasRef.current?.captureStream(60) as MediaStream;
+    const currentVideo = videoRef.current as HTMLVideoElement;
+    const currentStartButton = startButtonRef.current as HTMLButtonElement;
+    const currentStopButton = stopButtonRef.current as HTMLButtonElement;
+
+    let chunks = [] as any;
+    const mediaRecorder = new MediaRecorder(streamCanvas, {
+      videoBitsPerSecond: 5000000,
+    });
+    mediaRecorder.ondataavailable = (e) => {
+      chunks.push(e.data);
+    };
+    mediaRecorder.onstop = () => {
+      const fileBlob = new Blob(chunks, { type: 'video/mp4' });
+      chunks = [];
+      const videoURL = URL.createObjectURL(fileBlob);
+      currentVideo.src = videoURL;
+    };
+    mediaRecorder.ondataavailable = (e) => {
+      chunks.push(e.data);
+    };
+    currentStartButton.onclick = () => {
+      mediaRecorder.start();
+      setIsRecording(true);
+    };
+    currentStopButton.onclick = () => {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    };
+
     if (context && kinect.open()) {
       kinect.openMultiSourceReader({
         frameTypes: DEPTH_IMAGE_AND_BODY_KINECT_CONFIG,
@@ -101,10 +136,23 @@ export default function KinectCanvas() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={DEPTH_IMAGE_WIDTH}
-      height={DEPTH_IMAGE_HEIGHT}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        width={DEPTH_IMAGE_WIDTH}
+        height={DEPTH_IMAGE_HEIGHT}
+      />
+      <div>
+        <button ref={startButtonRef} type="button" disabled={isRecording}>
+          Start recording
+        </button>
+        <button ref={stopButtonRef} type="button" disabled={!isRecording}>
+          Stop recording
+        </button>
+        <video ref={videoRef} autoPlay controls>
+          <track kind="captions" />
+        </video>
+      </div>
+    </>
   );
 }
