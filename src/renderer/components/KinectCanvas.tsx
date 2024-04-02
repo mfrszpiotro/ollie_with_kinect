@@ -1,7 +1,14 @@
 // @ts-ignore
 import * as Kinect2 from 'kinect2';
 import { useEffect, useRef, useState } from 'react';
-import { BodyFrame, Body, MultiSourceFrame } from '../../kinect_interfaces';
+import fs from 'fs';
+import { json2csv } from 'json-2-csv';
+import {
+  BodyFrame,
+  Body,
+  MultiSourceFrame,
+  Joint,
+} from '../../kinect_interfaces';
 
 const DEPTH_IMAGE_WIDTH = 512;
 const DEPTH_IMAGE_HEIGHT = 424;
@@ -88,7 +95,9 @@ export default function KinectCanvas() {
     const currentStartButton = startButtonRef.current as HTMLButtonElement;
     const currentStopButton = stopButtonRef.current as HTMLButtonElement;
 
+    let recordedJoints = [] as Joint[][];
     let chunks = [] as any;
+    let recordingStartTime = 0;
     const mediaRecorder = new MediaRecorder(streamCanvas, {
       videoBitsPerSecond: 5000000,
     });
@@ -98,6 +107,18 @@ export default function KinectCanvas() {
     mediaRecorder.onstop = () => {
       const fileBlob = new Blob(chunks, { type: 'video/mp4' });
       chunks = [];
+      const filenameJson = `${recordingStartTime}.json`;
+      const framesToJsonString = JSON.stringify(recordedJoints);
+      const filenameCsv = `${recordingStartTime}.csv`;
+      const framesToCsvString = json2csv(recordedJoints);
+      fs.writeFile(filenameJson, framesToJsonString, 'utf8', () => {
+        alert(`Your file has been saved to ${filenameJson}`);
+      });
+      fs.writeFile(filenameCsv, framesToCsvString, 'utf8', () => {
+        alert(`Your file has been saved to ${filenameCsv}`);
+      });
+      recordedJoints = [];
+      recordingStartTime = 0;
       const videoURL = URL.createObjectURL(fileBlob);
       currentVideo.src = videoURL;
     };
@@ -105,6 +126,7 @@ export default function KinectCanvas() {
       chunks.push(e.data);
     };
     currentStartButton.onclick = () => {
+      recordingStartTime = Date.now();
       mediaRecorder.start();
       setIsRecording(true);
     };
@@ -127,6 +149,13 @@ export default function KinectCanvas() {
         }
         if (frame.body) {
           renderBodyFrame(context, context.canvas, frame.body, false);
+          if (mediaRecorder.state === 'recording') {
+            // eslint-disable-next-line no-restricted-syntax
+            const { bodies } = frame.body;
+            for (let i = 0; i < frame.body.bodies.length; i += 1) {
+              if (bodies[i].tracked) recordedJoints.push(bodies[i].joints);
+            }
+          }
         }
       });
     }
