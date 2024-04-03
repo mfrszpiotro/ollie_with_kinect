@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import comparison from './comparison.json';
-import { TimeTwoEventsComparison } from './data_interfaces';
+import { DynamicTimeWarp, TimeTwoEventsComparison } from './data_interfaces';
 import TableTTE from './components/TableTTE';
 import CircleTTE from './components/CircleTTE';
 import ChartDTW from './components/ChartDTW';
 import './Report.css';
-import path from 'path';
 
 export interface GradientProps {
   startColor: string;
@@ -16,7 +15,6 @@ export interface GradientProps {
 
 function GradientSVG({ startColor, endColor, idCSS, rotation }: GradientProps) {
   const gradientTransform = `rotate(${rotation})`;
-
   return (
     <svg style={{ height: 0 }}>
       <defs>
@@ -31,8 +29,7 @@ function GradientSVG({ startColor, endColor, idCSS, rotation }: GradientProps) {
 
 export default function Report() {
   const ComparisonsTTE = comparison.TimeTwoEvents as TimeTwoEventsComparison[];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const ComparinsonsDTW = comparison.DynamicTimeWarps as []; // todo
+  const ComparinsonsDTW = comparison.DynamicTimeWarps as DynamicTimeWarp[];
   const gradId = 'pink-gradient';
   return (
     <>
@@ -42,8 +39,8 @@ export default function Report() {
         </button>
       </Link>
       <div>
-        <ChartDTW />
-        <ChartDTW />
+        <ChartDTW comparisonData={ComparinsonsDTW[0]} />
+        <ChartDTW comparisonData={ComparinsonsDTW[1]} />
         <TableTTE comparisonData={ComparisonsTTE[0]} />
         <TableTTE comparisonData={ComparisonsTTE[1]} />
         <GradientSVG

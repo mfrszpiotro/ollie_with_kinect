@@ -15,4 +15,14 @@ export interface TimeTwoEventsComparison {
   diff_description: string;
 }
 
-export interface DynamicTimeWarp {} // todo
+export interface DynamicTimeWarp {
+  diff_name: string;
+  stage: string;
+  column_name: string;
+  commit_length: number;
+  reference_length: number;
+  total_distance: number;
+  normalized_distance: number;
+  html_plot: string;
+  diff_description: string;
+}
