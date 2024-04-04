@@ -20,14 +20,18 @@ export default function TableTTE({ comparisonData }: Props) {
         {diff_name}: {event_a_name} & {event_b_name}
       </h4>
       <table className="table-tte">
-        <tr>
-          <th>commit</th>
-          <th>reference</th>
-        </tr>
-        <tr>
-          <td>{time_diff_commit}</td>
-          <td>{time_diff_reference}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>commit</th>
+            <th>reference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{time_diff_commit}</td>
+            <td>{time_diff_reference}</td>
+          </tr>
+        </tbody>
       </table>
     </>
   );
