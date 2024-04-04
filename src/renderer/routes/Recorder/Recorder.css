@@ -1,0 +1,17 @@
+#recorder-container {
+  text-align: center;
+  width: fit-content;
+}
+
+#recorder-title{
+  font-weight: bold !important;
+  font-family: var(--mono-font);
+  color: var(--primary-text);
+  text-shadow:
+    1px 0 0 var(--secondary-text),
+    0 1px 0 var(--secondary-text),
+    -1px 0 0 var(--secondary-text),
+    0 -1px 0 var(--secondary-text);
+  font-size: 3rem;
+  margin: 0.4rem;
+}

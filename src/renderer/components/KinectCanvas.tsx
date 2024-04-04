@@ -166,12 +166,17 @@ export default function KinectCanvas() {
 
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        width={DEPTH_IMAGE_WIDTH}
-        height={DEPTH_IMAGE_HEIGHT}
-      />
-      <div>
+      <div
+        className="kinect-output-container"
+        style={{ width: DEPTH_IMAGE_WIDTH, height: DEPTH_IMAGE_HEIGHT }}
+      >
+        <canvas
+          ref={canvasRef}
+          width={DEPTH_IMAGE_WIDTH}
+          height={DEPTH_IMAGE_HEIGHT}
+        />
+      </div>
+      <div style={{ display: 'none' }}>
         <button ref={startButtonRef} type="button" disabled={isRecording}>
           Start recording
         </button>

@@ -10,7 +10,7 @@ export default function Menu() {
             <div>
               <ul id="menu-list">
                 <li>
-                  <Link to="/record">
+                  <Link to="/recorder">
                     <button className="menu-btn" type="button">
                       record your ollie
                     </button>

@@ -73,3 +73,8 @@ button:hover {
     /* Whatever width you want */
   }
 }
+
+.kinect-output-container{
+  background-color: var(--secondary-bg);
+  border: solid 0.2rem gray;
+}
