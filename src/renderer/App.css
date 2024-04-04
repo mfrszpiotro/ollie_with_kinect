@@ -12,13 +12,9 @@
 }
 
 body {
-  position: relative;
   background-color: var(--primary-bg);
-  height: 100vh;
   font-family: var(--mono-font);
-  justify-content: center;
-  align-items: center;
-  /* background-image:url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='200px' width='1500px'> <text x='20' y='150' fill='gray' font-size='200'>ollie /w kinect</text></svg>"); */
+  /* background-image:url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='160px' width='1500px'> <text x='-20  ' y='100' fill='rgb(134, 200, 196)' font-family='Courier New' font-weight='bolder' font-size='150'>ollie /w kinect</text></svg>"); */
 }
 
 button{
@@ -49,4 +45,31 @@ button:hover {
   font-weight: bold !important;
   padding: 0.5rem 1rem!important;
   border-radius: 3rem !important;
+}
+
+.link-arrow {
+  z-index: 999 !important;
+}
+
+.center-by-table{
+  .outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    /* Whatever width you want */
+  }
 }

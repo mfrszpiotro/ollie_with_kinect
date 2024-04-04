@@ -1,4 +1,4 @@
-.start-title{
+#start-title{
   font-weight: bold !important;
   font-family: var(--mono-font);
   color: var(--primary-text);
@@ -7,6 +7,16 @@
     0 1px 0 var(--secondary-text),
     -1px 0 0 var(--secondary-text),
     0 -1px 0 var(--secondary-text);
-    font-style: normal;
   font-size: 5rem;
+  margin: 1rem;
+}
+
+#start-title-container {
+  text-align: center;
+  width: 100%;
+}
+
+#start-btn-label{
+  font-weight: bold;
+  margin-block: 0;
 }

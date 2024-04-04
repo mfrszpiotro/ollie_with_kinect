@@ -1,0 +1,14 @@
+#menu-list {
+  list-style-type: none;
+  padding: 0.2rem;
+}
+
+.menu-btn {
+  min-width: 600px;
+  margin: 0.1rem;
+}
+
+#menu-container {
+  text-align: center;
+  width: 100%;
+}
