@@ -1,0 +1,31 @@
+#browser-container{
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  grid-auto-rows: minmax(100px, auto);
+  padding: 1rem;
+}
+
+#browser-title {
+  font-weight: bold !important;
+  font-family: var(--mono-font);
+  color: var(--primary-text);
+  text-shadow:
+    1px 0 0 var(--secondary-text),
+    0 1px 0 var(--secondary-text),
+    -1px 0 0 var(--secondary-text),
+    0 -1px 0 var(--secondary-text);
+  font-size: 3rem;
+  margin: 0.4rem;
+}
+
+#browser-grid-left {
+  margin: auto;
+}
+
+#browser-table {
+  text-align: center;
+  list-style-type: none;
+  padding: 1rem;
+}

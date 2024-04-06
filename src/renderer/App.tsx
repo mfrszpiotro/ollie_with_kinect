@@ -6,6 +6,7 @@ import Report from './routes/Report/Report';
 import Record from './routes/Recorder/Recorder';
 import './App.css';
 import Previewer from './routes/Previewer/Previewer';
+import Browser from './routes/Browser/Browser';
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
         <Route path="/report" element={<Report />} />
         <Route path="/recorder" element={<Record />} />
         <Route path="/recorder/previewer" element={<Previewer />} />
-        <Route path="/saved" element={<Menu />} />
+        <Route path="/browser" element={<Browser />} />
       </Routes>
     </Router>
   );

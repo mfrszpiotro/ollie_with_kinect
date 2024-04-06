@@ -17,11 +17,16 @@ export default function Menu() {
                   </Link>
                 </li>
                 <li>
-                  {/* /compare */}
+                  <Link to="/browser">
+                    <button className="menu-btn" type="button">
+                      compare it w/ others
+                    </button>
+                  </Link>
+                </li>
+                <li>
                   <Link to="/test">
                     <button className="menu-btn" type="button">
                       test functionalities
-                      {/* compare with other */}
                     </button>
                   </Link>
                 </li>

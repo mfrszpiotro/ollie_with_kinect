@@ -27,20 +27,24 @@ export default function Previewer() {
               <div id="previewer-grid-right">
                 <ul id="previewer-list">
                   <li>
-                    <button className="previewer-btn" type="button">
-                      redo
-                    </button>
+                    <Link to="/recorder">
+                      <button className="previewer-btn" type="button">
+                        redo
+                      </button>
+                    </Link>
                   </li>
                   <li>
-                    <button className="previewer-btn" type="button">
-                      compare
-                    </button>
+                    <Link to="/report">
+                      <button className="previewer-btn" type="button">
+                        compare
+                      </button>
+                    </Link>
                   </li>
                   <li>
                     <div id="previewer-reference-container">
                       <h2 id="previewer-reference-text">w/ reference:</h2>
                       <div id="previewer-compare-selector">
-                        <text id="previewer-compare-text">test.json</text>
+                        <span id="previewer-compare-text">test.json</span>
                         <button className="btn-arrow" type="button">
                           .
                         </button>
@@ -60,7 +64,7 @@ export default function Previewer() {
       </Link>
       <div style={{ position: 'fixed', bottom: '5px', right: '5px' }}>
         <Link to="/menu">
-          <button type="button">next</button>
+          <button type="button">menu</button>
         </Link>
       </div>
     </>
