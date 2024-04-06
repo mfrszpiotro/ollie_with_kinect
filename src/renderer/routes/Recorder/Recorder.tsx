@@ -14,7 +14,9 @@ export default function Recorder() {
                 <KinectCanvas />
               </div>
               <div style={{ textAlign: 'left' }}>
-                <button className="btn-arrow" type="button">.</button>
+                <button className="btn-arrow" type="button">
+                  .
+                </button>
                 <button className="btn-arrow" disabled type="button">
                   00:00
                 </button>
@@ -28,6 +30,11 @@ export default function Recorder() {
           &larr;
         </button>
       </Link>
+      <div style={{ position: 'fixed', bottom: '5px', right: '5px' }}>
+        <Link to="/recorder/previewer">
+          <button type="button">next</button>
+        </Link>
+      </div>
     </>
   );
 }

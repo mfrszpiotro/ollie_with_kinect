@@ -5,6 +5,7 @@ import Menu from './routes/Menu/Menu';
 import Report from './routes/Report/Report';
 import Record from './routes/Recorder/Recorder';
 import './App.css';
+import Previewer from './routes/Previewer/Previewer';
 
 export default function App() {
   return (
@@ -15,7 +16,7 @@ export default function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/report" element={<Report />} />
         <Route path="/recorder" element={<Record />} />
-        <Route path="/compare" element={<Menu />} />
+        <Route path="/recorder/previewer" element={<Previewer />} />
         <Route path="/saved" element={<Menu />} />
       </Routes>
     </Router>

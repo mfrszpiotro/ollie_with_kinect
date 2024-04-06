@@ -176,6 +176,7 @@ export default function KinectCanvas() {
           height={DEPTH_IMAGE_HEIGHT}
         />
       </div>
+      {/* Preview: */}
       <div style={{ display: 'none' }}>
         <button ref={startButtonRef} type="button" disabled={isRecording}>
           Start recording
