@@ -13,14 +13,6 @@ export default function Recorder() {
               <div>
                 <KinectCanvas />
               </div>
-              <div style={{ textAlign: 'left' }}>
-                <button className="btn-arrow" type="button">
-                  .
-                </button>
-                <button className="btn-arrow" disabled type="button">
-                  00:00
-                </button>
-              </div>
             </div>
           </div>
         </div>

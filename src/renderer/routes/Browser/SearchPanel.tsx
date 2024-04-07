@@ -23,7 +23,8 @@ export default function SearchPanel() {
     (directory: DirectoryStructure, index: number) => {
       const isStatusOk = !!(directory.hasSkeleton && directory.hasVideo);
       return (
-        <tr>
+        <tr key={directory.directoryName}>
+          {/* directory names in the same superdirectory are unique by design */}
           <td>{index}</td>
           <td>{directory.directoryName}</td>
           <td>

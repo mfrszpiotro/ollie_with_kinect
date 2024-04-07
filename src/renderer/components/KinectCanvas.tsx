@@ -1,6 +1,6 @@
 // @ts-ignore
 import * as Kinect2 from 'kinect2';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import fs from 'fs';
 import { json2csv } from 'json-2-csv';
 import {
@@ -85,7 +85,6 @@ export default function KinectCanvas() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const stopButtonRef = useRef<HTMLButtonElement>(null);
-  const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
     const kinect = new Kinect2();
@@ -104,22 +103,26 @@ export default function KinectCanvas() {
     mediaRecorder.ondataavailable = (e) => {
       chunks.push(e.data);
     };
-    mediaRecorder.onstop = () => {
-      const fileBlob = new Blob(chunks, { type: 'video/mp4' });
+    mediaRecorder.onstop = async () => {
+      const videoBlob = new Blob(chunks, { type: 'video/mp4' });
       chunks = [];
+      const videoBuffer = Buffer.from(await videoBlob.arrayBuffer());
+      fs.writeFile(`${recordingStartTime}.mp4`, videoBuffer, () => {
+        console.log(`Your file has been saved to ${recordingStartTime}.mp4`);
+      });
       const filenameJson = `${recordingStartTime}.json`;
       const framesToJsonString = JSON.stringify(recordedJoints);
+      fs.writeFile(filenameJson, framesToJsonString, 'utf8', () => {
+        console.log(`Your file has been saved to ${filenameJson}`);
+      });
       const filenameCsv = `${recordingStartTime}.csv`;
       const framesToCsvString = json2csv(recordedJoints);
-      fs.writeFile(filenameJson, framesToJsonString, 'utf8', () => {
-        alert(`Your file has been saved to ${filenameJson}`);
-      });
       fs.writeFile(filenameCsv, framesToCsvString, 'utf8', () => {
-        alert(`Your file has been saved to ${filenameCsv}`);
+        console.log(`Your file has been saved to ${filenameCsv}`);
       });
       recordedJoints = [];
       recordingStartTime = 0;
-      const videoURL = URL.createObjectURL(fileBlob);
+      const videoURL = URL.createObjectURL(videoBlob);
       currentVideo.src = videoURL;
     };
     mediaRecorder.ondataavailable = (e) => {
@@ -128,11 +131,9 @@ export default function KinectCanvas() {
     currentStartButton.onclick = () => {
       recordingStartTime = Date.now();
       mediaRecorder.start();
-      setIsRecording(true);
     };
     currentStopButton.onclick = () => {
       mediaRecorder.stop();
-      setIsRecording(false);
     };
 
     if (context && kinect.open()) {
@@ -176,14 +177,19 @@ export default function KinectCanvas() {
           height={DEPTH_IMAGE_HEIGHT}
         />
       </div>
+      <div style={{ textAlign: 'left' }}>
+        <button className="btn-arrow" ref={startButtonRef} type="button">
+          &#8919;
+        </button>
+        <button className="btn-arrow" ref={stopButtonRef} type="button">
+          &#8718;
+        </button>
+        <button className="btn-arrow" disabled type="button">
+          00:00
+        </button>
+      </div>
       {/* Preview: */}
       <div style={{ display: 'none' }}>
-        <button ref={startButtonRef} type="button" disabled={isRecording}>
-          Start recording
-        </button>
-        <button ref={stopButtonRef} type="button" disabled={!isRecording}>
-          Stop recording
-        </button>
         <video ref={videoRef} autoPlay controls>
           <track kind="captions" />
         </video>
