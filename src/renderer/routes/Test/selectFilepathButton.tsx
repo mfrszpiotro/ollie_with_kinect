@@ -3,10 +3,9 @@ import CHANNELS from '../../../ipc_channels';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  props?: any;
 }
 
-function SelectFilepathButton({ children, ...props }: ButtonProps) {
+function SelectFilepathButton({ children }: ButtonProps) {
   const [selectFileState, setSelectFileState] = useState('starting');
   const { dialog_open_file } = CHANNELS;
   const handleOnClick = () => {
@@ -23,7 +22,7 @@ function SelectFilepathButton({ children, ...props }: ButtonProps) {
   return (
     <>
       <p>{selectFileState}</p>
-      <button type="button" onClick={handleOnClick} {...props}>
+      <button type="button" onClick={handleOnClick}>
         {children}
       </button>
     </>

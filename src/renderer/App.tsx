@@ -1,5 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import Test from './routes/Test';
+import Test from './routes/Test/Test';
 import Start from './routes/Start/Start';
 import Menu from './routes/Menu/Menu';
 import Report from './routes/Report/Report';

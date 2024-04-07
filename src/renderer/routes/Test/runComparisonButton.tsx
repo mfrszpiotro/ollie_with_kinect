@@ -3,10 +3,9 @@ import CHANNELS from '../../../ipc_channels';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  props?: any;
 }
 
-function RunComparisonButton({ children, ...props }: ButtonProps) {
+function RunComparisonButton({ children }: ButtonProps) {
   const [comparisonJsonContents, setComparisonJsonContents] = useState({});
   const { run_comparison } = CHANNELS;
   const handleOnClick = () => {
@@ -25,7 +24,7 @@ function RunComparisonButton({ children, ...props }: ButtonProps) {
   return (
     <>
       <p>{JSON.stringify(comparisonJsonContents)}</p>
-      <button type="button" onClick={handleOnClick} {...props}>
+      <button type="button" onClick={handleOnClick}>
         {children}
       </button>
     </>
