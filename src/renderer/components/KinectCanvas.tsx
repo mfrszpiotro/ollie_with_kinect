@@ -10,6 +10,7 @@ import {
   Joint,
 } from '../../kinect_interfaces';
 
+const CANVAS_RECORDING_BPS = 5000000;
 const DEPTH_IMAGE_WIDTH = 512;
 const DEPTH_IMAGE_HEIGHT = 424;
 const DEPTH_IMAGE_AND_BODY_KINECT_CONFIG =
@@ -98,7 +99,7 @@ export default function KinectCanvas() {
     let chunks = [] as any;
     let recordingStartTime = 0;
     const mediaRecorder = new MediaRecorder(streamCanvas, {
-      videoBitsPerSecond: 5000000,
+      videoBitsPerSecond: CANVAS_RECORDING_BPS,
     });
     mediaRecorder.ondataavailable = (e) => {
       chunks.push(e.data);
