@@ -8,7 +8,7 @@ import {
   Body,
   MultiSourceFrame,
   Joint,
-} from '../../kinect_interfaces';
+} from '../../../kinect_interfaces';
 
 const CANVAS_RECORDING_BPS = 5000000;
 const DEPTH_IMAGE_WIDTH = 512;

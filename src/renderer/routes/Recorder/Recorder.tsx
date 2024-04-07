@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Recorder.css';
-import KinectCanvas from '../../components/KinectCanvas';
+import KinectCanvas from './KinectCanvas';
 
 export default function Recorder() {
   return (
