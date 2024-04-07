@@ -5,5 +5,7 @@
 
 .CircularProgressbar {
   background: whitesmoke;
-  border-radius: 100px;
+  border-radius: 100%;
+  margin-bottom: 0.5rem;
+  max-width: 11rem;
 }

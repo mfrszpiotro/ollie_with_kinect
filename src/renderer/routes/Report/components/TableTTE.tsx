@@ -8,17 +8,17 @@ export interface Props {
 
 export default function TableTTE({ comparisonData }: Props) {
   const {
-    diff_name,
-    event_a_name,
-    event_b_name,
+    // diff_name,
+    // event_a_name,
+    // event_b_name,
     time_diff_commit,
     time_diff_reference,
   } = comparisonData;
   return (
     <>
-      <h4>
+      {/* <h4>
         {diff_name}: {event_a_name} & {event_b_name}
-      </h4>
+      </h4> */}
       <table className="table-tte">
         <thead>
           <tr>

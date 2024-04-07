@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import comparison from './test_data/comparison.json';
 import { DynamicTimeWarp, TimeTwoEventsComparison } from './data_interfaces';
 import TableTTE from './components/TableTTE';
@@ -31,29 +32,77 @@ export default function Report() {
   const ComparisonsTTE = comparison.TimeTwoEvents as TimeTwoEventsComparison[];
   const ComparinsonsDTW = comparison.DynamicTimeWarps as DynamicTimeWarp[];
   const gradId = 'pink-gradient';
+  const [expandSidePanel, setExpandSidePanel] = useState(false);
   return (
     <>
-      <Link to="/">
-        <button className="btn-arrow" type="button">
-          &larr;
-        </button>
-      </Link>
-      <div>
-        <ChartDTW comparisonData={ComparinsonsDTW[0]} />
-        <ChartDTW comparisonData={ComparinsonsDTW[1]} />
-        <TableTTE comparisonData={ComparisonsTTE[0]} />
-        <TableTTE comparisonData={ComparisonsTTE[1]} />
+      <div
+        id="report-side-panel"
+        className={expandSidePanel ? 'expanded' : 'folded'}
+      >
+        <div>
+          <button
+            className="btn-arrow"
+            type="button"
+            onClick={() => setExpandSidePanel(!expandSidePanel)}
+          >
+            &larr;
+          </button>
+        </div>
+        <span>
+          <CircleTTE comparisonData={ComparisonsTTE[0]} idGradient={gradId} />
+          <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
+            <TableTTE comparisonData={ComparisonsTTE[1]} />
+          </span>
+        </span>
+        <span>
+          <CircleTTE comparisonData={ComparisonsTTE[1]} idGradient={gradId} />
+          <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
+            <TableTTE comparisonData={ComparisonsTTE[1]} />
+          </span>
+        </span>
+        <span>
+          <CircleTTE comparisonData={ComparisonsTTE[2]} idGradient={gradId} />
+          <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
+            <TableTTE comparisonData={ComparisonsTTE[1]} />
+          </span>
+        </span>
         <GradientSVG
           startColor="#EC85DA"
           endColor="#FDB6BF"
           idCSS={gradId}
           rotation="0"
         />
-        <CircleTTE comparisonData={ComparisonsTTE[0]} idGradient={gradId} />
-        <CircleTTE comparisonData={ComparisonsTTE[1]} idGradient={gradId} />
-        <CircleTTE comparisonData={ComparisonsTTE[2]} idGradient={gradId} />
       </div>
-      <div>{JSON.stringify(comparison)}</div>
+      <Link to="/">
+        <button className="btn-arrow" type="button">
+          &larr;
+        </button>
+      </Link>
+      <div id="report-main-panel">
+        <div id="videos-container">
+          <div>
+            Commit
+            <video autoPlay controls style={{ width: '100%' }}>
+              <track kind="captions" />
+            </video>
+          </div>
+          <div>
+            Reference
+            <video autoPlay controls style={{ width: '100%' }}>
+              <track kind="captions" />
+            </video>
+          </div>
+        </div>
+        <div id="charts-container">
+          <ChartDTW comparisonData={ComparinsonsDTW[0]} />
+          <ChartDTW comparisonData={ComparinsonsDTW[1]} />
+        </div>
+        <div>
+          <TableTTE comparisonData={ComparisonsTTE[0]} />
+          <TableTTE comparisonData={ComparisonsTTE[1]} />
+        </div>
+        <div>{JSON.stringify(comparison)}</div>
+      </div>
     </>
   );
 }

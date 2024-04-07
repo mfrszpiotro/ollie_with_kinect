@@ -1,0 +1,41 @@
+#videos-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 11.5rem;
+  grid-gap: 1rem;
+}
+
+#charts-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 11.5rem;
+  grid-gap: 1rem;
+}
+
+#report-main-panel {
+  min-width: 800px;
+  margin: 0.5rem;
+}
+
+#report-side-panel {
+  position: fixed;
+  right: 0;
+  background-color: var(--primary-bg);
+  border-left: solid 0.5rem var(--primary-text);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;;
+  z-index: 2;
+  max-width: 10rem;
+  height: 100%;
+  width: 10rem;
+  transition: width 0.5s;
+  overflow-y: hidden;
+}
+
+#report-side-panel.folded {
+  max-width: none;
+  width: 11rem;
+}
+
+#report-side-panel.expanded {
+  max-width: none;
+  width: calc(100% - 11rem);
+}

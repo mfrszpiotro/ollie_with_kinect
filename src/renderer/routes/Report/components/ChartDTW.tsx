@@ -10,7 +10,7 @@ export interface Props {
 
 export default function ChartDTW({ comparisonData }: Props) {
   return (
-    <>
+    <div>
       {comparisonData.stage}
       <div className="chart-dtw">
         {/* Temporary solution for dummy images */}
@@ -20,6 +20,6 @@ export default function ChartDTW({ comparisonData }: Props) {
           src={comparisonData.stage === 'Rising' ? rising_img : falling_img}
         />
       </div>
-    </>
+    </div>
   );
 }
