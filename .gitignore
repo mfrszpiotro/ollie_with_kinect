@@ -1,8 +1,5 @@
-process_ollie/
 *.html
 *.json
-src/main/*.json
-src/main/*.html
 
 # Logs
 logs
