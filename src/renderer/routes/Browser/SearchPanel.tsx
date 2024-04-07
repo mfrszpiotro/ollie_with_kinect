@@ -33,7 +33,7 @@ function isCorrectFileWithExtension(
 }
 
 export default function SearchPanel() {
-  const recordingsPath = path.join(process.cwd(), 'recordings');
+  const recordingsPath = path.join(process.cwd(), 'saved', 'recordings');
   const recordings = getDirectories(recordingsPath).map((dirName) => {
     const recordingDirContents = getFiles(path.join(recordingsPath, dirName));
     let hasCsv = false;
