@@ -1,5 +1,5 @@
-*.html
-*.json
+# Filed created by the application
+saved/
 
 # Logs
 logs

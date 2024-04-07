@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import comparison from './comparison.json';
+import comparison from './test_data/comparison.json';
 import { DynamicTimeWarp, TimeTwoEventsComparison } from './data_interfaces';
 import TableTTE from './components/TableTTE';
 import CircleTTE from './components/CircleTTE';

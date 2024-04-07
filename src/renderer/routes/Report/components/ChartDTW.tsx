@@ -1,8 +1,8 @@
 import React from 'react';
 import './ChartDTW.css';
 import { DynamicTimeWarp } from '../data_interfaces';
-import rising_img from './Rising.png';
-import falling_img from './Falling.png';
+import rising_img from '../test_data/Rising.png';
+import falling_img from '../test_data/Falling.png';
 
 export interface Props {
   comparisonData: DynamicTimeWarp;
