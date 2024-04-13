@@ -11,7 +11,7 @@ export interface Props {
 export default function ChartDTW({ comparisonData }: Props) {
   return (
     <div>
-      {comparisonData.stage}
+      <h2 className="charts-title">{comparisonData.stage.toLowerCase()}</h2>
       <div className="chart-dtw">
         {/* Temporary solution for dummy images */}
         <img

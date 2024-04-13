@@ -79,29 +79,47 @@ export default function Report() {
         </button>
       </Link>
       <div id="report-main-panel">
-        <div id="videos-container">
+        <div className="report-section">
           <div>
-            Commit
-            <video autoPlay controls style={{ width: '100%' }}>
-              <track kind="captions" />
-            </video>
+            <h2>Recordings</h2>
+            <div className="split-evenly">
+              <div>
+                Commit
+                <video autoPlay controls style={{ width: '100%' }}>
+                  <track kind="captions" />
+                </video>
+              </div>
+              <div>
+                Reference
+                <video autoPlay controls style={{ width: '100%' }}>
+                  <track kind="captions" />
+                </video>
+              </div>
+            </div>
           </div>
+        </div>
+        <div className="report-section">
           <div>
-            Reference
-            <video autoPlay controls style={{ width: '100%' }}>
-              <track kind="captions" />
-            </video>
+            <h2>Trajectories comparison</h2>
+            <div className="split-evenly">
+              <ChartDTW comparisonData={ComparinsonsDTW[0]} />
+              <ChartDTW comparisonData={ComparinsonsDTW[1]} />
+            </div>
           </div>
         </div>
-        <div id="charts-container">
-          <ChartDTW comparisonData={ComparinsonsDTW[0]} />
-          <ChartDTW comparisonData={ComparinsonsDTW[1]} />
+        <div className="report-section">
+          <div className="split-1-2">
+            <div>name</div>
+            <TableTTE comparisonData={ComparisonsTTE[0]} />
+          </div>
         </div>
-        <div>
-          <TableTTE comparisonData={ComparisonsTTE[0]} />
-          <TableTTE comparisonData={ComparisonsTTE[1]} />
+        <div className="report-section">
+          <div className="split-2-1">
+            <TableTTE comparisonData={ComparisonsTTE[1]} />
+            <div>name</div>
+          </div>
         </div>
-        <div>{JSON.stringify(comparison)}</div>
+        {/* <div>{JSON.stringify(comparison)}</div> */}
       </div>
     </>
   );

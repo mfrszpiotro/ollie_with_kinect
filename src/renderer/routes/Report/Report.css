@@ -1,16 +1,29 @@
-#videos-container {
+.split-evenly {
   display: grid;
-  grid-template-columns: 1fr 1fr 11.5rem;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
 }
 
-#charts-container {
+.split-1-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr 11.5rem;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1rem;
+}
+
+.split-2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 1rem;
+}
+
+.report-section {
+  display: grid;
+  grid-template-columns: 2fr 11.5rem;
   grid-gap: 1rem;
 }
 
 #report-main-panel {
+  text-align: center;
   min-width: 800px;
   margin: 0.5rem;
 }
