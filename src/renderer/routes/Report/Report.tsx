@@ -40,32 +40,37 @@ export default function Report() {
         className={expandSidePanel ? 'expanded' : 'folded'}
       >
         <div>
+          <Link to="/">
+            <button className="btn-arrow" type="button">
+              &larr;
+            </button>
+          </Link>
           <button
             className="btn-arrow"
             type="button"
             onClick={() => setExpandSidePanel(!expandSidePanel)}
           >
-            &larr;
+            ex
           </button>
         </div>
-        <span>
+        <div className="report-side-panel-section">
           <CircleTTE comparisonData={ComparisonsTTE[0]} idGradient={gradId} />
           <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
-            <TableTTE comparisonData={ComparisonsTTE[1]} />
+            <TableTTE comparisonData={ComparisonsTTE[0]} />
           </span>
-        </span>
-        <span>
+        </div>
+        <div className="report-side-panel-section">
           <CircleTTE comparisonData={ComparisonsTTE[1]} idGradient={gradId} />
           <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
             <TableTTE comparisonData={ComparisonsTTE[1]} />
           </span>
-        </span>
-        <span>
+        </div>
+        <div className="report-side-panel-section">
           <CircleTTE comparisonData={ComparisonsTTE[2]} idGradient={gradId} />
           <span style={{ display: expandSidePanel ? 'block' : 'none' }}>
-            <TableTTE comparisonData={ComparisonsTTE[1]} />
+            <TableTTE comparisonData={ComparisonsTTE[2]} />
           </span>
-        </span>
+        </div>
         <GradientSVG
           startColor="#EC85DA"
           endColor="#FDB6BF"
@@ -73,24 +78,20 @@ export default function Report() {
           rotation="0"
         />
       </div>
-      <Link to="/">
-        <button className="btn-arrow" type="button">
-          &larr;
-        </button>
-      </Link>
       <div id="report-main-panel">
         <div className="report-section">
+          <div />
           <div>
             <h2>Recordings</h2>
             <div className="split-evenly">
               <div>
-                Commit
+                <h3>commit</h3>
                 <video autoPlay controls style={{ width: '100%' }}>
                   <track kind="captions" />
                 </video>
               </div>
               <div>
-                Reference
+                <h3>reference</h3>
                 <video autoPlay controls style={{ width: '100%' }}>
                   <track kind="captions" />
                 </video>
@@ -99,8 +100,9 @@ export default function Report() {
           </div>
         </div>
         <div className="report-section">
+          <div />
           <div>
-            <h2>Trajectories comparison</h2>
+            <h2>Trajectories</h2>
             <div className="split-evenly">
               <ChartDTW comparisonData={ComparinsonsDTW[0]} />
               <ChartDTW comparisonData={ComparinsonsDTW[1]} />
@@ -108,15 +110,21 @@ export default function Report() {
           </div>
         </div>
         <div className="report-section">
+          <div />
           <div className="split-1-2">
-            <div>name</div>
+            <div>
+              <h2>Did I lift my back foot immediately after the pop?</h2>
+            </div>
             <TableTTE comparisonData={ComparisonsTTE[0]} />
           </div>
         </div>
         <div className="report-section">
+          <div />
           <div className="split-2-1">
             <TableTTE comparisonData={ComparisonsTTE[1]} />
-            <div>name</div>
+            <div>
+              <h2>How far did I land from the starting point?</h2>
+            </div>
           </div>
         </div>
         {/* <div>{JSON.stringify(comparison)}</div> */}

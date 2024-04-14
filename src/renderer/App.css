@@ -8,7 +8,8 @@
   --secondary-text: #FFB9F8;
   --primary-bg: #8BD0CA;
   --secondary-bg: #214658;
-  --mono-font: "Azaret Mono"
+  --mono-font: "Azaret Mono";
+  --report-text: #E079B8;
 }
 
 body {
