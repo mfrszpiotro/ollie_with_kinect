@@ -5,20 +5,34 @@ import { useState } from 'react';
 
 interface DirectoryStructure {
   directoryName: string;
-  skeleton: string | null;
-  video: string | null;
+  skeleton: string;
+  video: string;
 }
 
-function getDirectories(workingDirectory: string) {
-  return readdirSync(workingDirectory, { withFileTypes: true })
-    .filter((dirent: Dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+function getDirectories(workingDirectory: string): string[] {
+  try {
+    return readdirSync(workingDirectory, { withFileTypes: true })
+      .filter((dirent: Dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  } catch (err: any) {
+    if (err?.code !== 'ENOENT') {
+      throw err;
+    }
+  }
+  return [];
 }
 
-function getFiles(workingDirectory: string) {
-  return readdirSync(workingDirectory, { withFileTypes: true })
-    .filter((dirent: Dirent) => dirent.isFile())
-    .map((dirent) => dirent.name);
+function getFiles(workingDirectory: string): string[] {
+  try {
+    return readdirSync(workingDirectory, { withFileTypes: true })
+      .filter((dirent: Dirent) => dirent.isFile())
+      .map((dirent) => dirent.name);
+  } catch (err: any) {
+    if (err?.code !== 'ENOENT') {
+      throw err;
+    }
+  }
+  return [];
 }
 
 function isCorrectFileWithExtension(
