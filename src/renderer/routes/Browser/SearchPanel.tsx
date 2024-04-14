@@ -1,11 +1,12 @@
 import './SearchPanel.css';
 import { Dirent, readdirSync } from 'fs';
 import path from 'path';
+import { useState } from 'react';
 
 interface DirectoryStructure {
   directoryName: string;
-  hasSkeleton: boolean;
-  hasVideo: boolean;
+  skeleton: string | null;
+  video: string | null;
 }
 
 function getDirectories(workingDirectory: string) {
@@ -32,28 +33,41 @@ function isCorrectFileWithExtension(
   return true;
 }
 
-export default function SearchPanel() {
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  onRowClicked: (filepath: string) => void;
+}
+
+export default function SearchPanel({ onRowClicked }: Props) {
   const recordingsPath = path.join(process.cwd(), 'saved', 'recordings');
-  const recordings = getDirectories(recordingsPath).map((dirName) => {
+  const initialRecordings = getDirectories(recordingsPath).map((dirName) => {
     const recordingDirContents = getFiles(path.join(recordingsPath, dirName));
-    let hasCsv = false;
-    let hasVid = false;
-    recordingDirContents.forEach((content: string) => {
-      if (isCorrectFileWithExtension(content, dirName, 'csv')) hasCsv = true;
-      if (isCorrectFileWithExtension(content, dirName, 'mp4')) hasVid = true;
+    let csvPath = '';
+    let mp4Path = '';
+    recordingDirContents.forEach((filename: string) => {
+      if (isCorrectFileWithExtension(filename, dirName, 'csv'))
+        csvPath = path.join(recordingsPath, dirName, filename);
+      if (isCorrectFileWithExtension(filename, dirName, 'mp4'))
+        mp4Path = path.join(recordingsPath, dirName, filename);
     });
     return {
       directoryName: dirName,
-      hasSkeleton: hasCsv,
-      hasVideo: hasVid,
+      skeleton: csvPath,
+      video: mp4Path,
     };
   });
+  // todo: scan for new recordings button
+  // eslint-disable-next-line no-unused-vars
+  const [recordings, setRecordings] = useState(initialRecordings);
 
   const recordingFoldersTableRows = recordings.map(
     (directory: DirectoryStructure, index: number) => {
-      const isStatusOk = !!(directory.hasSkeleton && directory.hasVideo);
+      const isStatusOk = !!(directory.skeleton && directory.video);
+      const onVideoPreviewedChange = () => {
+        onRowClicked(directory.video as string);
+      };
       return (
-        <tr key={directory.directoryName}>
+        <tr key={directory.directoryName} onClick={onVideoPreviewedChange}>
           {/* directory names in the same superdirectory are unique by design */}
           <td>{index}</td>
           <td>{directory.directoryName}</td>

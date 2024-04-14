@@ -99,6 +99,7 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      webSecurity: false, // todo: register file protocol instead (good security practice)
       nodeIntegration: true,
       contextIsolation: false,
       preload: app.isPackaged

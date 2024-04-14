@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import './Browser.css';
+import { useState } from 'react';
 import SearchPanel from './SearchPanel';
 
 const DEPTH_IMAGE_WIDTH = 512;
 const DEPTH_IMAGE_HEIGHT = 424;
 
 export default function Browser() {
+  const [currentVideoPreview, setCurrentVideoPreview] = useState('');
   return (
     <>
       <div className="center-by-table">
@@ -18,11 +20,12 @@ export default function Browser() {
                   height: DEPTH_IMAGE_HEIGHT,
                 }}
               >
-                <SearchPanel />
+                <SearchPanel onRowClicked={setCurrentVideoPreview} />
               </div>
               <div id="browser-grid-right">
                 <h2 id="browser-title">preview:</h2>
                 <video
+                  src={currentVideoPreview}
                   style={{
                     width: DEPTH_IMAGE_WIDTH,
                     height: DEPTH_IMAGE_HEIGHT,
