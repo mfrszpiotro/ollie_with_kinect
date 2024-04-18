@@ -9,6 +9,7 @@ import {
   MultiSourceFrame,
   CsvBody,
   JointType,
+  BodyFrameWithTime,
 } from '../../../kinect_interfaces';
 
 const CANVAS_RECORDING_BPS = 5000000;
@@ -82,9 +83,10 @@ function renderBodyFrame(
   });
 }
 
-function extractCsvBody(bodyFrame: BodyFrame): CsvBody {
+function extractCsvBody(bodyFrame: BodyFrameWithTime): CsvBody {
   const result = {} as CsvBody;
-  const { bodies, floorClipPlane } = bodyFrame;
+  const { bodies, floorClipPlane } = bodyFrame.frame;
+  result.Time = bodyFrame.time;
   result.Floor_x = floorClipPlane.x;
   result.Floor_y = floorClipPlane.y;
   result.Floor_z = floorClipPlane.z;
@@ -248,7 +250,7 @@ export default function KinectCanvas() {
     const currentStartButton = startButtonRef.current as HTMLButtonElement;
     const currentStopButton = stopButtonRef.current as HTMLButtonElement;
 
-    let recordedFrames = [] as BodyFrame[];
+    let recordedFrames = [] as BodyFrameWithTime[];
     let chunks = [] as any;
     let recordingStartTime = 0;
     const mediaRecorder = new MediaRecorder(streamCanvas, {
@@ -308,7 +310,10 @@ export default function KinectCanvas() {
         if (frame.body) {
           renderBodyFrame(context, context.canvas, frame.body, false);
           if (mediaRecorder.state === 'recording') {
-            recordedFrames.push(frame.body);
+            const result = {} as BodyFrameWithTime;
+            result.frame = frame.body;
+            result.time = Date.now() - recordingStartTime;
+            recordedFrames.push(result);
           }
         }
       });

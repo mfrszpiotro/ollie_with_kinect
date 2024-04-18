@@ -170,3 +170,8 @@ export interface CsvBody {
   Floor_z: number;
   Floor_w: number;
 }
+
+export interface BodyFrameWithTime {
+  frame: BodyFrame;
+  time: number;
+}
