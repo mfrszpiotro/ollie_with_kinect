@@ -37,16 +37,15 @@ const { run_comparison } = CHANNELS;
 ipcMain.on(run_comparison, async (event) => {
   try {
     child_process.execFileSync(
-      path.join(
-        'C:/Users/piotrowskmarcel/Desktop/repos/kinect-electron-react-boilerplate/src/process_ollie',
-        'processing_app.exe',
-      ),
+      path.join(process.cwd(), 'process_ollie', 'processing_app.exe'),
       [
-        'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/ok/jump_20231106120823716.csv',
-        'C:/Users/piotrowskmarcel/Desktop/repos/process_ollie/data/interim_time/good/jump_20231106121119882.csv',
+        path.join(process.cwd(), 'saved', 'recordings', 'test', 'test.csv'),
+        path.join(process.cwd(), 'saved', 'recordings', 'test1', 'test1.csv'),
+        '-cg',
+        '-rg',
       ],
     );
-    const data = fs.readFileSync(path.join(__dirname, 'comparison.json'));
+    const data = fs.readFileSync(path.join(process.cwd(), 'comparison.json'));
     event.reply(run_comparison, JSON.parse(data.toString()));
   } catch (error: unknown) {
     if (error instanceof Error) {
