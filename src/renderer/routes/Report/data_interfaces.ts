@@ -23,6 +23,6 @@ export interface DynamicTimeWarp {
   reference_length: number;
   total_distance: number;
   normalized_distance: number;
-  html_plot: string;
+  figure_name: string;
   diff_description: string;
 }
