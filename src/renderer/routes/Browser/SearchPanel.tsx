@@ -3,7 +3,7 @@ import { Dirent, readdirSync } from 'fs';
 import path from 'path';
 import { useState } from 'react';
 
-interface DirectoryStructure {
+export interface DirectoryStructure {
   directoryName: string;
   skeleton: string;
   video: string;
@@ -49,10 +49,10 @@ function isCorrectFileWithExtension(
 
 interface Props {
   // eslint-disable-next-line no-unused-vars
-  onRowClicked: (filepath: string) => void;
+  onRowClicked: (dir: DirectoryStructure) => void;
 }
 
-export default function SearchPanel({ onRowClicked }: Props) {
+export function SearchPanel({ onRowClicked }: Props) {
   const recordingsPath = path.join(process.cwd(), 'saved', 'recordings');
   const initialRecordings = getDirectories(recordingsPath).map((dirName) => {
     const recordingDirContents = getFiles(path.join(recordingsPath, dirName));
@@ -78,7 +78,7 @@ export default function SearchPanel({ onRowClicked }: Props) {
     (directory: DirectoryStructure, index: number) => {
       const isStatusOk = !!(directory.skeleton && directory.video);
       const onVideoPreviewedChange = () => {
-        onRowClicked(directory.video as string);
+        onRowClicked(directory);
       };
       return (
         <tr key={directory.directoryName} onClick={onVideoPreviewedChange}>
