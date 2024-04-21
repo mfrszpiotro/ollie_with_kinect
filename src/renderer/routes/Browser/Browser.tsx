@@ -1,13 +1,23 @@
 import { Link } from 'react-router-dom';
 import './Browser.css';
 import { useState } from 'react';
-import { SearchPanel, DirectoryStructure } from './SearchPanel';
+import SearchPanel from './SearchPanel';
+import {
+  ComparisonBuilder,
+  DirectoryStructure,
+} from '../comparison_interfaces';
 
 const DEPTH_IMAGE_WIDTH = 512;
 const DEPTH_IMAGE_HEIGHT = 424;
 
-export default function Browser() {
-  const [currentVideoPreview, setCurrentVideoPreview] = useState(
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  onNextClicked: (comp: ComparisonBuilder) => void;
+  comparisonBuilder: ComparisonBuilder;
+}
+
+export default function Browser({ comparisonBuilder, onNextClicked }: Props) {
+  const [currentReference, setCurrentReference] = useState(
     {} as DirectoryStructure,
   );
   return (
@@ -22,12 +32,12 @@ export default function Browser() {
                   height: DEPTH_IMAGE_HEIGHT,
                 }}
               >
-                <SearchPanel onRowClicked={setCurrentVideoPreview} />
+                <SearchPanel onRowClicked={setCurrentReference} />
               </div>
               <div id="browser-grid-right">
                 <h2 id="browser-title">preview:</h2>
                 <video
-                  src={currentVideoPreview.video}
+                  src={currentReference.video}
                   style={{
                     width: DEPTH_IMAGE_WIDTH,
                     height: DEPTH_IMAGE_HEIGHT,
@@ -48,7 +58,14 @@ export default function Browser() {
         </button>
       </Link>
       <div style={{ position: 'fixed', bottom: '5px', right: '5px' }}>
-        <Link to="/recorder">
+        <Link
+          to="/browser/recorder"
+          onClick={() => {
+            comparisonBuilder.isGoofyReference = true;
+            comparisonBuilder.reference = currentReference;
+            onNextClicked(comparisonBuilder);
+          }}
+        >
           <button type="button">record</button>
         </Link>
       </div>

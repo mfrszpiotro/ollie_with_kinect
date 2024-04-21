@@ -2,12 +2,7 @@ import './SearchPanel.css';
 import { Dirent, readdirSync } from 'fs';
 import path from 'path';
 import { useState } from 'react';
-
-export interface DirectoryStructure {
-  directoryName: string;
-  skeleton: string;
-  video: string;
-}
+import { DirectoryStructure } from '../comparison_interfaces';
 
 function getDirectories(workingDirectory: string): string[] {
   try {
@@ -52,7 +47,7 @@ interface Props {
   onRowClicked: (dir: DirectoryStructure) => void;
 }
 
-export function SearchPanel({ onRowClicked }: Props) {
+export default function SearchPanel({ onRowClicked }: Props) {
   const recordingsPath = path.join(process.cwd(), 'saved', 'recordings');
   const initialRecordings = getDirectories(recordingsPath).map((dirName) => {
     const recordingDirContents = getFiles(path.join(recordingsPath, dirName));

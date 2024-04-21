@@ -10,11 +10,11 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
-import fs from 'fs';
 import child_process from 'child_process';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import CHANNELS from '../ipc_channels';
+import CHANNELS from '../renderer/routes/ipc_channels';
+import { ComparisonBuilder } from '../renderer/routes/comparison_interfaces';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -34,25 +34,30 @@ ipcMain.on(dialog_open_file, async (event) => {
 });
 
 const { run_comparison } = CHANNELS;
-ipcMain.on(run_comparison, async (event) => {
-  try {
-    child_process.execFileSync(
-      path.join(process.cwd(), 'process_ollie', 'processing_app.exe'),
-      [
-        path.join(process.cwd(), 'saved', 'recordings', 'test', 'test.csv'),
-        path.join(process.cwd(), 'saved', 'recordings', 'test1', 'test1.csv'),
-        '-cg',
-        '-rg',
-      ],
-    );
-    const data = fs.readFileSync(path.join(process.cwd(), 'comparison.json'));
-    event.reply(run_comparison, JSON.parse(data.toString()));
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      event.reply(run_comparison, { [error.name]: error.message });
+ipcMain.on(
+  run_comparison,
+  async (
+    event,
+    { commit, reference, isGoofyCommit, isGoofyReference }: ComparisonBuilder,
+  ) => {
+    try {
+      child_process.execFileSync(
+        path.join(process.cwd(), 'process_ollie', 'processing_app.exe'),
+        [
+          commit.skeleton,
+          reference.skeleton,
+          isGoofyCommit ? '-cg' : '',
+          isGoofyReference ? '-rg' : '',
+        ],
+      );
+      event.reply(run_comparison, path.join(process.cwd(), 'comparison.json'));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        event.reply(run_comparison, { [error.name]: error.message });
+      }
     }
-  }
-});
+  },
+);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

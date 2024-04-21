@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import comparison from './test_data/comparison.json';
+import fs from 'fs';
 import { DynamicTimeWarp, TimeTwoEventsComparison } from './data_interfaces';
 import TableTTE from './components/TableTTE';
 import CircleTTE from './components/CircleTTE';
@@ -28,7 +28,13 @@ function GradientSVG({ startColor, endColor, idCSS, rotation }: GradientProps) {
   );
 }
 
-export default function Report() {
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  currentReportFilepath: string;
+}
+
+export default function Report({ currentReportFilepath }: Props) {
+  const comparison = JSON.parse(fs.readFileSync(currentReportFilepath, 'utf8'));
   const ComparisonsTTE = comparison.TimeTwoEvents as TimeTwoEventsComparison[];
   const ComparinsonsDTW = comparison.DynamicTimeWarps as DynamicTimeWarp[];
   const gradId = 'pink-gradient';

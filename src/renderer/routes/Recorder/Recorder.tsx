@@ -1,8 +1,20 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import './Recorder.css';
 import KinectCanvas from './KinectCanvas';
+import {
+  ComparisonBuilder,
+  DirectoryStructure,
+} from '../comparison_interfaces';
 
-export default function Recorder() {
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  onNextClicked: (comp: ComparisonBuilder) => void;
+  comparisonBuilder: ComparisonBuilder;
+}
+
+export default function Recorder({ comparisonBuilder, onNextClicked }: Props) {
+  const [currentCommit, setCurrentCommit] = useState({} as DirectoryStructure);
   return (
     <>
       <div className="center-by-table">
@@ -11,7 +23,7 @@ export default function Recorder() {
             <div id="recorder-container" className="inner">
               <h2 id="recorder-title">kinect output:</h2>
               <div>
-                <KinectCanvas />
+                <KinectCanvas onRecordingStop={setCurrentCommit} />
               </div>
             </div>
           </div>
@@ -23,7 +35,14 @@ export default function Recorder() {
         </button>
       </Link>
       <div style={{ position: 'fixed', bottom: '5px', right: '5px' }}>
-        <Link to="/recorder/previewer">
+        <Link
+          to="/browser/recorder/previewer"
+          onClick={() => {
+            comparisonBuilder.isGoofyCommit = true;
+            comparisonBuilder.commit = currentCommit;
+            onNextClicked(comparisonBuilder);
+          }}
+        >
           <button type="button">next</button>
         </Link>
       </div>

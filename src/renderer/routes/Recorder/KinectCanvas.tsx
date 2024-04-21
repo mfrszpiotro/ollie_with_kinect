@@ -3,6 +3,7 @@ import * as Kinect2 from 'kinect2';
 import { useEffect, useRef } from 'react';
 import fs from 'fs';
 import { json2csv } from 'json-2-csv';
+import path from 'path';
 import {
   BodyFrame,
   Body,
@@ -10,7 +11,8 @@ import {
   CsvBody,
   JointType,
   BodyFrameWithTime,
-} from '../../../kinect_interfaces';
+} from '../kinect_interfaces';
+import { DirectoryStructure } from '../comparison_interfaces';
 
 const CANVAS_RECORDING_BPS = 5000000;
 const DEPTH_IMAGE_WIDTH = 512;
@@ -236,7 +238,12 @@ function extractCsvBody(bodyFrame: BodyFrameWithTime): CsvBody {
   return result;
 }
 
-export default function KinectCanvas() {
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  onRecordingStop: (dir: DirectoryStructure) => void;
+}
+
+export default function KinectCanvas({ onRecordingStop }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const startButtonRef = useRef<HTMLButtonElement>(null);
@@ -266,19 +273,14 @@ export default function KinectCanvas() {
       const videoBlob = new Blob(chunks, { type: 'video/mp4' });
       chunks = [];
       const videoBuffer = Buffer.from(await videoBlob.arrayBuffer());
-      fs.writeFile(`${recordingStartTime}.mp4`, videoBuffer, () => {
-        console.log(`Your file has been saved to ${recordingStartTime}.mp4`);
-      });
-      const filenameJson = `${recordingStartTime}.json`;
-      const framesToJsonString = JSON.stringify(recordedCsvBodies);
-      fs.writeFile(filenameJson, framesToJsonString, 'utf8', () => {
-        console.log(`Your file has been saved to ${filenameJson}`);
-      });
-      const filenameCsv = `${recordingStartTime}.csv`;
+      fs.writeFileSync(`${recordingStartTime}.mp4`, videoBuffer);
       const framesToCsvString = json2csv(recordedCsvBodies);
-      fs.writeFile(filenameCsv, framesToCsvString, 'utf8', () => {
-        console.log(`Your file has been saved to ${filenameCsv}`);
-      });
+      fs.writeFileSync(`${recordingStartTime}.csv`, framesToCsvString, 'utf8');
+      const dir = {} as DirectoryStructure;
+      dir.directoryName = recordingStartTime.toString();
+      dir.skeleton = path.join(process.cwd(), `${recordingStartTime}.csv`);
+      dir.video = path.join(process.cwd(), `${recordingStartTime}.mp4`);
+      onRecordingStop(dir);
       recordedFrames = [];
       recordingStartTime = 0;
       const videoURL = URL.createObjectURL(videoBlob);
@@ -321,7 +323,7 @@ export default function KinectCanvas() {
     return () => {
       kinect.close();
     };
-  }, []);
+  }, [onRecordingStop]);
 
   return (
     <>
