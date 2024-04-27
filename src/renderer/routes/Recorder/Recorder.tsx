@@ -34,7 +34,14 @@ export default function Recorder({ comparisonBuilder, onNextClicked }: Props) {
           &larr;
         </button>
       </Link>
-      <div style={{ position: 'fixed', bottom: '5px', right: '5px' }}>
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '5px',
+          right: '5px',
+          display: comparisonBuilder.reference ? 'block' : 'none',
+        }}
+      >
         <Link
           to="/browser/recorder/previewer"
           onClick={() => {

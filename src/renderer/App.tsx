@@ -2,7 +2,6 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
 import path from 'path';
-import Test from './routes/Test/Test';
 import Start from './routes/Start/Start';
 import Menu from './routes/Menu/Menu';
 import Report from './routes/Report/Report';
@@ -22,8 +21,10 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/test" element={<Test />} />
+        <Route
+          path="/menu"
+          element={<Menu onRender={setComparisonBuilder} />}
+        />
         <Route
           path="/report"
           element={<Report currentReportFilepath={currentReportFilepath} />}

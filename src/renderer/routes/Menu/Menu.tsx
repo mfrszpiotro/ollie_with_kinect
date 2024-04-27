@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
 import './Menu.css';
+import { ComparisonBuilder } from '../comparison_interfaces';
 
-export default function Menu() {
+interface Props {
+  // eslint-disable-next-line no-unused-vars
+  onRender: (comp: ComparisonBuilder) => void;
+}
+
+export default function Menu({ onRender }: Props) {
   return (
     <div className="center-by-table">
       <div className="outer">
@@ -10,32 +16,33 @@ export default function Menu() {
             <div>
               <ul id="menu-list">
                 <li>
-                  <Link to="/recorder">
+                  <Link
+                    to="/browser/recorder"
+                    onClick={() => {
+                      onRender({} as ComparisonBuilder);
+                    }}
+                  >
                     <button className="menu-btn" type="button">
                       record your ollie
                     </button>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/browser">
+                  <Link
+                    to="/browser"
+                    onClick={() => {
+                      onRender({} as ComparisonBuilder);
+                    }}
+                  >
                     <button className="menu-btn" type="button">
                       compare it w/ others
                     </button>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/test">
-                    <button className="menu-btn" type="button">
-                      test functionalities
-                    </button>
-                  </Link>
-                </li>
-                <li>
-                  {/* /saved */}
                   <Link to="/report">
                     <button className="menu-btn" type="button">
                       test report
-                      {/* view saved comparisons */}
                     </button>
                   </Link>
                 </li>
