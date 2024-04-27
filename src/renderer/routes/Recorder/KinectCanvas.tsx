@@ -248,6 +248,7 @@ export default function KinectCanvas({ onRecordingStop }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const stopButtonRef = useRef<HTMLButtonElement>(null);
+  const timerButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const kinect = new Kinect2();
@@ -256,6 +257,10 @@ export default function KinectCanvas({ onRecordingStop }: Props) {
     const currentVideo = videoRef.current as HTMLVideoElement;
     const currentStartButton = startButtonRef.current as HTMLButtonElement;
     const currentStopButton = stopButtonRef.current as HTMLButtonElement;
+    const currentTimerButton = timerButtonRef.current as HTMLButtonElement;
+    currentStartButton.disabled = false;
+    currentStopButton.disabled = true;
+    currentTimerButton.textContent = 'push start';
 
     let recordedFrames = [] as BodyFrameWithTime[];
     let chunks = [] as any;
@@ -263,10 +268,16 @@ export default function KinectCanvas({ onRecordingStop }: Props) {
     const mediaRecorder = new MediaRecorder(streamCanvas, {
       videoBitsPerSecond: CANVAS_RECORDING_BPS,
     });
-    mediaRecorder.ondataavailable = (e) => {
-      chunks.push(e.data);
+    mediaRecorder.onstart = () => {
+      recordingStartTime = Date.now();
+      currentStartButton.disabled = true;
+      currentStopButton.disabled = false;
+      currentTimerButton.textContent = 'recording...';
     };
     mediaRecorder.onstop = async () => {
+      currentStartButton.disabled = false;
+      currentStopButton.disabled = true;
+      currentTimerButton.textContent = 'saved ';
       const recordedCsvBodies = recordedFrames.map((bodyFrame) =>
         extractCsvBody(bodyFrame),
       );
@@ -290,7 +301,6 @@ export default function KinectCanvas({ onRecordingStop }: Props) {
       chunks.push(e.data);
     };
     currentStartButton.onclick = () => {
-      recordingStartTime = Date.now();
       mediaRecorder.start();
     };
     currentStopButton.onclick = () => {
@@ -344,7 +354,7 @@ export default function KinectCanvas({ onRecordingStop }: Props) {
         <button className="btn-arrow" ref={stopButtonRef} type="button">
           &#8718;
         </button>
-        <button className="btn-arrow" disabled type="button">
+        <button className="btn-arrow" ref={timerButtonRef} type="button">
           00:00
         </button>
       </div>
