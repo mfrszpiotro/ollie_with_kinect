@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
+import path from 'path';
 import Test from './routes/Test/Test';
 import Start from './routes/Start/Start';
 import Menu from './routes/Menu/Menu';
@@ -11,7 +12,9 @@ import Browser from './routes/Browser/Browser';
 import { ComparisonBuilder } from './routes/comparison_interfaces';
 
 export default function App() {
-  const [currentReportFilepath, setCurrentReportFilepath] = useState('');
+  const [currentReportFilepath, setCurrentReportFilepath] = useState(
+    path.join(process.cwd(), 'comparison.json'),
+  );
   const [comparisonBuilder, setComparisonBuilder] = useState(
     {} as ComparisonBuilder,
   );
