@@ -9,11 +9,11 @@ export interface Props {
 }
 
 export default function CircleTTE({ comparisonData, idGradient }: Props) {
-  const { absolute_percent } = comparisonData.how_close;
+  const { relative_percent } = comparisonData.how_close;
   return (
     <CircularProgressbar
-      value={absolute_percent}
-      text={absolute_percent ? `${absolute_percent.toFixed(0)}%` : 'N/A'}
+      value={relative_percent}
+      text={relative_percent ? `${relative_percent.toFixed(0)}%` : 'N/A'}
       styles={{
         path: { stroke: `url(#${idGradient})` },
       }}

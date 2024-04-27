@@ -42,7 +42,7 @@ ipcMain.on(
   ) => {
     try {
       child_process.execFileSync(
-        path.join(process.cwd(), 'process_ollie', 'processing_app.exe'),
+        path.join(process.cwd(), 'process_ollie', 'comparing_app.exe'),
         [
           commit.skeleton,
           reference.skeleton,

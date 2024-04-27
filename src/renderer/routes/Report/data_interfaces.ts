@@ -1,6 +1,6 @@
 export interface HowClose {
   absolute: number;
-  absolute_percent: number;
+  relative_percent: number;
   is_negative: boolean;
   context: string;
 }
