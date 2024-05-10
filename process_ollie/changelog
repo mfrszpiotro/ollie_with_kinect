@@ -2,3 +2,4 @@ Changelog for process_ollie compiled tool - Date format: DD.MM.RRRR
 - 07.04.2024: initial upload
 - 20.04.2024: dtw plot looks changed and saved to png file
 - 27.04.2024: fixed angle calculation, updated dtw plot looks, renamed .exe program and absolute_percent -> relative_percent change in HowClose interface
+- 10.05.2024: angle calculation with proper joint coordinates ensured + minor fixes
